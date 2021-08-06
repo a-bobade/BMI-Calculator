@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}User History{% endblock %}
+{% block content %}
+
+<div class="container">
+    <h2>Users History</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Weight</th>
+            <th>Height</th>
+            <th>BMI</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for history in histories %}
+        <tr>
+            <td>{{ history.user }}</td>
+            <td>{{ history.weight }}</td>
+            <td>{{ history.height }}</td>
+            <td>{{ history.bmi }}</td>
+            <td>{{ history.date }}</td>
+            <td><a href="{% url 'delete' id=history.id %}">delete</a> </td>
+        </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="form-row">
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="tab-bmi">
+                <h3>BMI Calculator</h3>
+                <div class="tabcontent" id="metric">
+                    <form method="post" action="{% url 'home' %}">
+                        {% csrf_token %}
+                        <div class="col-12">
+                            <label>Weight: </label>
+                            <input type="text" name="weight" class="form-control" required placeholder="kg">
+                        </div>
+                        <br>
+                        <div class="col-12">
+                            <label>Height: </label>
+                            <input type="text" name="height" class="form-control" required placeholder="cm">
+                        </div>
+                        <br>
+                        {% if request.user.is_authenticated %}
+                        <div class="form-check">
+                            <input class="form-check-input" checked="checked" name="save" value="on" type="checkbox">
+                            <label class="form-check-label">Save</label>
+                        </div>
+                        {% else %}
+                        <div class="form-check my-5">
+                            <input disabled class="form-check-input" checked="checked" name="save" value="on"
+                                   type="checkbox">
+                            <label class="form-check-label">Save</label>
+                        </div>
+                        {% endif %}
+                        <br>
+                        <button type="submit" class="btn btn-primary">Calculate</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        {% if bmi %}
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <h2>Result</h2>
+            <p>Your BMI = {{bmi}} kg/m²</p>
+            <p>Category = {{state}}</p>
+            <div class="progress">
+                <div class="progress-bar bg-danger" style="width:25%">
+                    Underweight
+                </div>
+                <div class="progress-bar bg-success" style="width:25%">
+                    Healthy Weight
+                </div>
+                <div class="progress-bar bg-warning" style="width:25%">
+                    Overweight
+                </div>
+                <div class="progress-bar bg-danger" style="width:25%">
+                    Obese
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    {{div|safe}}
+</div>
+
+{% endblock %}
